@@ -2,20 +2,17 @@ package com.mpolitakis.movierama.ui.search
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.preference.PreferenceManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.mpolitakis.movierama.R
 import com.mpolitakis.movierama.databinding.ItemMoviesSearchBinding
-import com.mpolitakis.movierama.ui.main.MainFragmentDirections
+import com.mpolitakis.movierama.networking.response.search.Result
 import com.squareup.picasso.Picasso
-import dagger.hilt.android.qualifiers.ApplicationContext
 
 
-class   RecyclerViewAdapterSearch(private var movieList : List<com.mpolitakis.movierama.networking.response.search.Result>) :
+class   RecyclerViewAdapterSearch(private var movieList : List<Result>) :
     RecyclerView.Adapter<RecyclerViewAdapterSearch.ViewHolder>() {
 
 
@@ -34,7 +31,7 @@ class   RecyclerViewAdapterSearch(private var movieList : List<com.mpolitakis.mo
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = ItemMoviesSearchBinding.inflate(layoutInflater, parent, false)
-        return ViewHolder(binding , context)
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -46,23 +43,23 @@ class   RecyclerViewAdapterSearch(private var movieList : List<com.mpolitakis.mo
             val navController = Navigation.findNavController(it)
             navController.navigate(action)
         }
-        holder.bind(movieList[position], pref ,position)
+        holder.bind(movieList[position], pref)
     }
 
     override fun getItemCount(): Int = movieList.size
 
-    class ViewHolder(private val binding: ItemMoviesSearchBinding, context: Context) :
+    class ViewHolder(private val binding: ItemMoviesSearchBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
 
 
-        fun bind(movie: com.mpolitakis.movierama.networking.response.search.Result, pref: SharedPreferences, position: Int) {
+        fun bind(movie: Result, pref: SharedPreferences) {
 
             val editor: SharedPreferences.Editor = pref.edit()
             binding.movieTitleDisplaySearch.text = movie.title
             val picasso: Picasso = Picasso.get()
             picasso.setIndicatorsEnabled(true)
-            picasso.load("http://image.tmdb.org/t/p/w185" +movie.poster_path).fit().centerCrop()
+            picasso.load("http://image.tmdb.org/t/p/w500" +movie.poster_path).fit().centerCrop()
                 .into(binding.movieIconDisplaySearch)
             binding.ratingSearch.rating= (movie.vote_average/2).toFloat()
             binding.releaseDateDisplaySearch.text = movie.release_date
@@ -103,8 +100,7 @@ class   RecyclerViewAdapterSearch(private var movieList : List<com.mpolitakis.mo
 
 
 
-    fun refreshData(movies : List<com.mpolitakis.movierama.networking.response.search.Result>){
-        Log.e("Value","$movieList")
+    fun refreshData(movies : List<Result>){
         this.movieList = movies
         this.notifyDataSetChanged()
     }

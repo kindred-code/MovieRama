@@ -10,10 +10,10 @@ abstract class EndlessRecyclerOnScrollListener(private val mLinearLayoutManager:
     private var previousTotal = 0
     private var loading = true
     private val visibleThreshold = 20
-    var firstVisibleItem = 0
-    var visibleItemCount = 0
-    var totalItemCount = 0
-    private var current_page = 1
+    private var firstVisibleItem = 0
+    private var visibleItemCount = 0
+    private var totalItemCount = 0
+    private var currentPage = 1
     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
         super.onScrolled(recyclerView, dx, dy)
         visibleItemCount = recyclerView.childCount
@@ -29,8 +29,8 @@ abstract class EndlessRecyclerOnScrollListener(private val mLinearLayoutManager:
             <= firstVisibleItem + visibleThreshold
         ) {
 
-            current_page++
-            onLoadMore(current_page)
+            currentPage++
+            onLoadMore(currentPage)
             loading = true
         }
     }

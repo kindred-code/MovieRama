@@ -36,7 +36,7 @@ class DetailsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.details_fragment, container, false)
 
@@ -125,7 +125,7 @@ class DetailsFragment : Fragment() {
             binding.rating.rating= (popularMovies.vote_average/2).toFloat()
             binding.releaseDateDisplayDetails.text = popularMovies.release_date
             binding.descriptionText.text = popularMovies.overview
-            var genres : String = ""
+            var genres = ""
             popularMovies.genres.map {
                 genres += "${it.name}, "
             }

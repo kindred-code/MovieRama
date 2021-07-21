@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">MovieRama</string>
+    <string name="movie_poster">Movie Poster</string>
+    <string name="release_date">Release Date</string>
+    <string name="favourite_button">Favourite Button</string>
+    <string name="genres">Genres</string>
+    <string name="description">DESCRIPTION</string>
+    <string name="director">DIRECTOR</string>
+    <string name="director_display">Director</string>
+    <string name="cast">CAST</string>
+    <string name="cast_display">Cast Display</string>
+    <string name="similar_movies">SIMILAR MOVIES</string>
+    <string name="reviews">REVIEWS</string>
 </resources>

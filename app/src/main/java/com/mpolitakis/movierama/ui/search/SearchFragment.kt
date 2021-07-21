@@ -4,11 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mpolitakis.movierama.R
@@ -16,7 +14,6 @@ import com.mpolitakis.movierama.databinding.SearchFragmentBinding
 import com.mpolitakis.movierama.networking.response.search.Result
 import com.mpolitakis.movierama.ui.endlessScroll.EndlessRecyclerOnScrollListener
 import dagger.hilt.android.AndroidEntryPoint
-
 
 
 @AndroidEntryPoint
@@ -30,7 +27,6 @@ class SearchFragment : Fragment() {
     private val adapter by lazy { RecyclerViewAdapterSearch(movieData) }
     private lateinit var binding: SearchFragmentBinding
     private var movieData = mutableListOf<Result>()
-    private lateinit var refreshRecyclerViewButton: ImageButton
     private val args : SearchFragmentArgs by navArgs()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,7 +47,6 @@ class SearchFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val navController = view?.let { Navigation.findNavController(it) }
         viewModel = ViewModelProvider(this).get(SearchViewModel::class.java)
 
         viewModel.getList(1, args.query)

@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -28,7 +27,6 @@ class MainFragment : Fragment() {
     private val adapter by lazy { RecyclerViewAdapter(movieData) }
     private lateinit var binding: MainFragmentBinding
     private var movieData = mutableListOf<Result>()
-    private lateinit var refreshRecyclerViewButton: ImageButton
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

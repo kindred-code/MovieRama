@@ -20,17 +20,14 @@ object NetworkModule {
     @Singleton
     @Provides
     fun provideOkHttp() : OkHttpClient{
-        val interceptor = HttpLoggingInterceptor()
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
         return OkHttpClient.Builder()
-            .addInterceptor(interceptor)
             .build()
     }
 
     @Provides
     @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
-        var gson = GsonBuilder()
+        val gson = GsonBuilder()
             .setLenient()
             .create()
         return Retrofit.Builder()

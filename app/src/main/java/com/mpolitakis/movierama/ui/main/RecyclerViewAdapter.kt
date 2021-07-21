@@ -32,7 +32,7 @@ class   RecyclerViewAdapter(private var movieList: List<Result>) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = ItemMoviesBinding.inflate(layoutInflater, parent, false)
-        return ViewHolder(binding , context)
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -51,7 +51,7 @@ class   RecyclerViewAdapter(private var movieList: List<Result>) :
 
     override fun getItemCount(): Int = movieList.size
 
-    class ViewHolder(private val binding: ItemMoviesBinding, context: Context) :
+    class ViewHolder(private val binding: ItemMoviesBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
 
@@ -60,7 +60,6 @@ class   RecyclerViewAdapter(private var movieList: List<Result>) :
             val editor: SharedPreferences.Editor = pref.edit()
             binding.movieTitleDisplay.text = movie.title
             val picasso: Picasso = Picasso.get()
-
             picasso.load("http://image.tmdb.org/t/p/w500" +movie.poster_path).fit().centerCrop()
                 .into(binding.movieIconDisplay)
             binding.rating.rating= (movie.vote_average/2).toFloat()
@@ -101,7 +100,6 @@ class   RecyclerViewAdapter(private var movieList: List<Result>) :
 
 
      fun refreshData(movies : List<Result>){
-        Log.e("Value","$movieList")
         this.movieList = movies
         this.notifyDataSetChanged()
     }
