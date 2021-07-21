@@ -2,6 +2,8 @@ package com.mpolitakis.movierama
 
 
 import com.mpolitakis.movierama.networking.ApiService
+import com.mpolitakis.movierama.repository.details.MovieDetailsRepository
+import com.mpolitakis.movierama.repository.details.MovieDetailsRepositoryImpl
 import com.mpolitakis.movierama.repository.popular.PopularMoviesRepository
 import com.mpolitakis.movierama.repository.popular.PopularMoviesRepositoryImpl
 import com.mpolitakis.movierama.repository.search.SearchedMoviesRepository
@@ -23,5 +25,9 @@ class AppModule{
     @Provides
     fun provideSearchedMoviesRepository(apiService: ApiService): SearchedMoviesRepository =
         SearchedMoviesRepositoryImpl(apiService)
+
+    @Provides
+    fun provideMovieDetailsRepository(apiService: ApiService): MovieDetailsRepository =
+        MovieDetailsRepositoryImpl(apiService)
 
 }

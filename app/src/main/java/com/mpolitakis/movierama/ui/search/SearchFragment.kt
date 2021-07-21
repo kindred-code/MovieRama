@@ -58,13 +58,6 @@ class SearchFragment : Fragment() {
         observeMovieList()
         setupRecycleView(args.query)
 
-        refreshRecyclerViewButton = binding.refreshSearch
-
-        refreshRecyclerViewButton.setOnClickListener {
-            adapter.refreshData(emptyList())
-            adapter.notifyDataSetChanged()
-        }
-
 
         binding.searchButton.setOnQueryTextListener(object : android.widget.SearchView.OnQueryTextListener {
 

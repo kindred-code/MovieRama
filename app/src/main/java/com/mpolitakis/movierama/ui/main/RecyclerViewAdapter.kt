@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.mpolitakis.movierama.R
 import com.mpolitakis.movierama.databinding.ItemMoviesBinding
@@ -12,13 +13,13 @@ import com.mpolitakis.movierama.networking.response.popular.Result
 import com.squareup.picasso.Picasso
 
 
-class   RecyclerViewAdapter(private var movieList : List<Result>) :
+class   RecyclerViewAdapter(private var movieList: List<Result>) :
     RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>() {
 
 
     lateinit var context: Context
 
-
+    lateinit var sharedPreferences: SharedPreferences
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
@@ -35,10 +36,17 @@ class   RecyclerViewAdapter(private var movieList : List<Result>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val pref: SharedPreferences = context
-            .getSharedPreferences("Favourite$position", 0)
+        sharedPreferences = context.applicationContext
+            .getSharedPreferences("Favourite${movieList[position].id}", Context.MODE_PRIVATE)
 
-        holder.bind(movieList[position], pref ,position)
+
+        holder.itemView.setOnClickListener{
+            val action = MainFragmentDirections.actionMainFragmentToDetailsFragment(movieList[position].id)
+            val navController = Navigation.findNavController(it)
+            navController.navigate(action)
+        }
+
+        holder.bind(movieList[position], sharedPreferences)
     }
 
     override fun getItemCount(): Int = movieList.size
@@ -47,37 +55,39 @@ class   RecyclerViewAdapter(private var movieList : List<Result>) :
         RecyclerView.ViewHolder(binding.root) {
 
 
-
-        fun bind(movie: Result, pref: SharedPreferences, position: Int) {
+        fun bind(movie: Result, pref: SharedPreferences) {
 
             val editor: SharedPreferences.Editor = pref.edit()
             binding.movieTitleDisplay.text = movie.title
             val picasso: Picasso = Picasso.get()
-            picasso.setIndicatorsEnabled(true)
-            picasso.load("http://image.tmdb.org/t/p/w185" +movie.poster_path)
+
+            picasso.load("http://image.tmdb.org/t/p/w500" +movie.poster_path).fit().centerCrop()
                 .into(binding.movieIconDisplay)
-            binding.ratingDisplay.text = movie.vote_average.toString()
+            binding.rating.rating= (movie.vote_average/2).toFloat()
             binding.releaseDateDisplay.text = movie.release_date
-
-            if (pref.getBoolean("Favourite$position", true)){
-                binding.favouriteButton.setImageResource(R.drawable.favorite_true_foreground)
-
+            val favouriteItem = "Favourite${movie.id}"
+            if (pref.getBoolean(favouriteItem, false)){
+                binding.favouriteButton.setImageResource(R.drawable.favourite_true_foreground)
             }
             else{
-                binding.favouriteButton.setImageResource(R.drawable.favorite_false_foreground)
+                editor.putBoolean("Favourite${movie.id}", false)
+                binding.favouriteButton.setImageResource(R.drawable.favourite_false_foreground)
+                editor.apply()
 
             }
             binding.favouriteButton.setOnClickListener {
-                if (pref.getBoolean("Favourite$position", true)){
-                    editor.putBoolean("Favourite$position", false)
-                    binding.favouriteButton.setImageResource(R.drawable.favorite_false_foreground)
+                if (pref.getBoolean(favouriteItem, false)){
+                    editor.putBoolean("Favourite${movie.id}", false)
+                    binding.favouriteButton.setImageResource(R.drawable.favourite_false_foreground)
                     editor.apply()
+                    binding.notifyChange()
 
                 }
                 else{
-                    editor.putBoolean("Favourite$position", true)
-                    binding.favouriteButton.setImageResource(R.drawable.favorite_true_foreground)
+                    editor.putBoolean("Favourite${movie.id}", true)
+                    binding.favouriteButton.setImageResource(R.drawable.favourite_true_foreground)
                     editor.apply()
+                    binding.notifyChange()
                 }
 
 

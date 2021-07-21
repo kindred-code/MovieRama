@@ -55,12 +55,6 @@ class MainFragment : Fragment() {
         observeMovieList()
         setupRecycleView()
 
-        refreshRecyclerViewButton = binding.refresh
-
-        refreshRecyclerViewButton.setOnClickListener {
-            adapter.refreshData(emptyList())
-            adapter.notifyDataSetChanged()
-        }
 
 
         binding.searchButton.setOnQueryTextListener(object : android.widget.SearchView.OnQueryTextListener {
