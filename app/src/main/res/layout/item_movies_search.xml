@@ -5,28 +5,29 @@
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="360dp"
+        android:layout_height="600dp"
         android:layout_margin="10dp"
         android:minHeight="?listPreferredItemHeightLarge"
         app:cardCornerRadius="4dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="600dp"
             android:background="@color/card_color"
             android:minHeight="?listPreferredItemHeightLarge">
 
 
             <TextView
                 android:id="@+id/movie_title_display_search"
-                android:layout_width="231dp"
-                android:layout_height="45dp"
+                android:layout_width="243dp"
+                android:layout_height="53dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_weight="1"
                 android:foregroundGravity="center_horizontal"
                 android:gravity="fill_horizontal|center_vertical"
                 android:lines="2"
+                android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -35,15 +36,14 @@
 
             <ImageView
                 android:id="@+id/movie_icon_display_search"
-                android:layout_width="0dp"
-                android:layout_height="245dp"
+                android:layout_width="match_parent"
+                android:layout_height="500dp"
+                android:contentDescription="@string/movie_poster"
                 app:layout_constraintCircleRadius="80dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:tint="#f9a920"
-                android:contentDescription="@string/movie_poster" />
+                tools:tint="#f9a920" />
 
             <RatingBar
                 android:id="@+id/rating_search"
@@ -71,9 +71,8 @@
 
             <ImageButton
                 android:id="@+id/favourite_button_search"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_width="62dp"
+                android:layout_height="53dp"
                 android:layout_marginTop="32dp"
                 android:layout_marginBottom="32dp"
                 android:backgroundTint="@color/card_color"
@@ -81,7 +80,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/movie_title_display_search"
                 app:layout_constraintTop_toBottomOf="@+id/movie_icon_display_search"
-                app:srcCompat="@android:drawable/btn_star_big_off"
+                app:srcCompat="@drawable/favourite_false_foreground"
                 android:contentDescription="@string/favourite_button" />
 
 
